@@ -29,7 +29,7 @@ callButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const card = e.target.closest(".bg-white");
     const serviceName = card.querySelector("h3").textContent;
-    const serviceNumber = card.querySelector("h2").textContent;
+    const serviceNumber = card.querySelector("span").textContent;
 
     if (coins < 20) {
       alert("Not enough coins to make a call!");
@@ -41,7 +41,7 @@ callButtons.forEach((btn) => {
     coinSpan.textContent = coins;
 
     // Alert
-    alert(`Calling ${serviceName} at ${serviceNumber}`);
+    alert(`Calling ${serviceName} at ${serviceNumber} `);
 
     // Current Time
     const now = new Date();
@@ -54,8 +54,14 @@ callButtons.forEach((btn) => {
 
     // Add to call history
     const li = document.createElement("li");
-    li.className = "flex justify-between";
-    li.innerHTML = `${serviceName} - ${serviceNumber} <span>${timeString}</span>`;
+    li.className =
+      "flex justify-between items-center bg-green-50 p-3 rounded-xl mb-2";
+
+    li.innerHTML = `<p class="font-semibold">${serviceName}<br>
+    <span class="text-sm text-gray-600">${serviceNumber}</span>
+    </p>
+    <span class="text-sm text-gray-700">${timeString}</span>`;
+
     historyList.prepend(li);
   });
 });
@@ -69,12 +75,11 @@ document.querySelectorAll(".copyBtn").forEach((btn) => {
     const numberText =
       this.closest(".bg-white").querySelector(".numberElement").innerText;
 
-    // Clipboard এ copy
+    // Clipboard copy
     navigator.clipboard.writeText(numberText).then(() => {
       copyCount++;
       document.getElementById("copyCount").innerText = copyCount;
 
-      // Alert দেখাবে
       alert("Copied: " + numberText);
     });
   });
