@@ -27,7 +27,7 @@ const callButtons = document.querySelectorAll(
 // --- Call Functionality ---
 callButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    const card = e.target.closest(".bg-white"); // current card
+    const card = e.target.closest(".bg-white");
     const serviceName = card.querySelector("h3").textContent;
     const serviceNumber = card.querySelector("h2").textContent;
 
@@ -58,4 +58,31 @@ callButtons.forEach((btn) => {
     li.innerHTML = `${serviceName} - ${serviceNumber} <span>${timeString}</span>`;
     historyList.prepend(li);
   });
+});
+
+// --- Copy Functionality ---
+
+let copyCount = 0;
+
+document.querySelectorAll(".copyBtn").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    const numberText =
+      this.closest(".bg-white").querySelector(".numberElement").innerText;
+
+    // Clipboard এ copy
+    navigator.clipboard.writeText(numberText).then(() => {
+      copyCount++;
+      document.getElementById("copyCount").innerText = copyCount;
+
+      // Alert দেখাবে
+      alert("Copied: " + numberText);
+    });
+  });
+});
+
+// --- Clear History ---
+const historyList = document.querySelector("#history-box ul");
+const clearHistoryBtn = document.querySelector("#history-box button");
+clearHistoryBtn.addEventListener("click", () => {
+  historyList.innerHTML = "";
 });
